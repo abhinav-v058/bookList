@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Popular Books for Kids Ages 0–5</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #111a2e;
+      --panel-2: #16233d;
+      --text: #e5edf7;
+      --muted: #9fb0c9;
+      --line: #27405f;
+      --brand: #4f8cff;
+      --brand-2: #73b0ff;
+      --accent: #19c2a0;
+      --warm: #ffd479;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(79, 140, 255, 0.14), transparent 24%),
+        linear-gradient(180deg, #09111e 0%, var(--bg) 100%);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    .container {
+      width: min(1280px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 40px 0 64px;
+    }
+
+    .hero, section {
+      background: rgba(17, 26, 46, 0.9);
+      border: 1px solid rgba(159, 176, 201, 0.14);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 36px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -70px -80px auto;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(25, 194, 160, 0.18), transparent 70%);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--brand-2);
+      background: rgba(79, 140, 255, 0.12);
+      border: 1px solid rgba(79, 140, 255, 0.2);
+      padding: 8px 12px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15;
+    }
+
+    .lead {
+      margin: 0;
+      max-width: 920px;
+      color: var(--muted);
+      font-size: 1.03rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .stat {
+      background: rgba(22, 35, 61, 0.9);
+      border: 1px solid rgba(159, 176, 201, 0.12);
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-2);
+      margin-bottom: 6px;
+    }
+
+    .value {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    section {
+      margin-top: 24px;
+      padding: 28px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 1.5rem;
+      border-bottom: 1px solid rgba(159, 176, 201, 0.12);
+      padding-bottom: 12px;
+    }
+
+    p, li { color: var(--text); }
+    .muted { color: var(--muted); }
+
+    .callout {
+      margin-top: 14px;
+      border-left: 4px solid var(--brand);
+      background: rgba(79, 140, 255, 0.08);
+      padding: 14px 16px;
+      border-radius: 12px;
+      color: var(--text);
+    }
+
+    .pill {
+      display: inline-block;
+      margin: 4px 8px 0 0;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(25, 194, 160, 0.12);
+      border: 1px solid rgba(25, 194, 160, 0.2);
+      color: #a7f3e5;
+      font-size: 0.84rem;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 16px;
+      border: 1px solid rgba(159, 176, 201, 0.12);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1080px;
+      background: rgba(17, 26, 46, 0.5);
+    }
+
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      padding: 14px 14px;
+      border-bottom: 1px solid rgba(159, 176, 201, 0.08);
+    }
+
+    th {
+      background: rgba(79, 140, 255, 0.08);
+      color: var(--brand-2);
+      font-size: 0.95rem;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tr:hover td {
+      background: rgba(115, 176, 255, 0.035);
+    }
+
+    a {
+      color: var(--warm);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .rank {
+      font-weight: 800;
+      color: var(--warm);
+      white-space: nowrap;
+    }
+
+    .age {
+      white-space: nowrap;
+      color: var(--brand-2);
+      font-weight: 700;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      margin-top: 20px;
+      font-size: 0.94rem;
+    }
+
+    @media (max-width: 720px) {
+      .container { width: min(100% - 24px, 1280px); }
+      .hero, section { padding: 20px; }
+      th, td { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <div class="eyebrow">Reading Report</div>
+      <h1>Popular Books to Read to Kids Ages 0–5</h1>
+      <p class="lead">
+        This report highlights widely loved books for babies, toddlers, and preschoolers ages 0–5. The list is sorted by
+        broad mainstream popularity and long-term cultural recognition across families, libraries, schools, and gift lists.
+        It includes quick buying links for Amazon and Walmart, a short note on how each book can help a child, and a brief
+        fact about the book itself.
+      </p>
+
+      <div class="grid">
+        <div class="stat"><div class="label">Age Range</div><div class="value">0–5 years</div></div>
+        <div class="stat"><div class="label">Selection Style</div><div class="value">Classic + modern favorites</div></div>
+        <div class="stat"><div class="label">Ordering</div><div class="value">Sorted by general popularity</div></div>
+        <div class="stat"><div class="label">Store Links</div><div class="value">Amazon and Walmart search links</div></div>
+      </div>
+    </header>
+
+    <section>
+      <h2>How to Use This List</h2>
+      <p class="muted">
+        For ages 0–2, choose sturdy board books, simple rhyme, and repetition. For ages 3–5, add richer stories,
+        humor, emotions, and discussion prompts. Re-reading is not a bug; it is basically the whole toddler operating system.
+      </p>
+      <div>
+        <span class="pill">language development</span>
+        <span class="pill">bonding</span>
+        <span class="pill">rhythm & repetition</span>
+        <span class="pill">social-emotional learning</span>
+        <span class="pill">early literacy</span>
+      </div>
+      <div class="callout">
+        <strong>Note on links:</strong> Retail listings can change constantly, so the links below point to title search pages on Amazon and Walmart.
+        That keeps them stable and useful instead of pretending I have magic live product verification powers.
+      </div>
+    </section>
+
+    <section>
+      <h2>Ranked Book List</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Book</th>
+              <th>Author</th>
+              <th>Best For</th>
+              <th>Why It Helps Kids</th>
+              <th>About the Book</th>
+              <th>Amazon</th>
+              <th>Walmart</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="rank">1</td>
+              <td><strong>Goodnight Moon</strong></td>
+              <td>Margaret Wise Brown</td>
+              <td class="age">0–3</td>
+              <td>Builds bedtime routine, calm listening, and word recognition through soothing repetition.</td>
+              <td>A legendary bedtime classic with simple objects, gentle rhyme, and a predictable wind-down structure.</td>
+              <td><a href="https://www.amazon.com/s?k=Goodnight+Moon+Margaret+Wise+Brown" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=Goodnight+Moon+Margaret+Wise+Brown" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">2</td>
+              <td><strong>The Very Hungry Caterpillar</strong></td>
+              <td>Eric Carle</td>
+              <td class="age">1–4</td>
+              <td>Supports counting, days of the week, food vocabulary, and early sequencing skills.</td>
+              <td>One of the most famous children’s books ever, known for its bright art and caterpillar transformation story.</td>
+              <td><a href="https://www.amazon.com/s?k=The+Very+Hungry+Caterpillar+Eric+Carle" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=The+Very+Hungry+Caterpillar+Eric+Carle" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">3</td>
+              <td><strong>Brown Bear, Brown Bear, What Do You See?</strong></td>
+              <td>Bill Martin Jr. & Eric Carle</td>
+              <td class="age">0–3</td>
+              <td>Strengthens color recognition, pattern memory, and participation because kids can quickly predict the lines.</td>
+              <td>A rhythm-heavy early childhood staple that invites choral reading and repetition.</td>
+              <td><a href="https://www.amazon.com/s?k=Brown+Bear+Brown+Bear+What+Do+You+See" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=Brown+Bear+Brown+Bear+What+Do+You+See" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">4</td>
+              <td><strong>Chicka Chicka Boom Boom</strong></td>
+              <td>Bill Martin Jr. & John Archambault</td>
+              <td class="age">2–5</td>
+              <td>Introduces the alphabet with rhythm, sound play, and memorable repetition.</td>
+              <td>A wildly energetic alphabet book where letters race up a coconut tree and chaos predictably follows.</td>
+              <td><a href="https://www.amazon.com/s?k=Chicka+Chicka+Boom+Boom" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=Chicka+Chicka+Boom+Boom" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">5</td>
+              <td><strong>Where the Wild Things Are</strong></td>
+              <td>Maurice Sendak</td>
+              <td class="age">3–5</td>
+              <td>Helps kids process big feelings, imagination, and the idea that emotions can be intense but manageable.</td>
+              <td>A landmark picture book about anger, fantasy, adventure, and returning safely home.</td>
+              <td><a href="https://www.amazon.com/s?k=Where+the+Wild+Things+Are+Maurice+Sendak" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=Where+the+Wild+Things+Are+Maurice+Sendak" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">6</td>
+              <td><strong>Dear Zoo</strong></td>
+              <td>Rod Campbell</td>
+              <td class="age">0–3</td>
+              <td>Encourages curiosity, animal vocabulary, and motor engagement through interactive flaps.</td>
+              <td>A beloved lift-the-flap board book that works absurdly well for repeated toddler readings.</td>
+              <td><a href="https://www.amazon.com/s?k=Dear+Zoo+Rod+Campbell" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=Dear+Zoo+Rod+Campbell" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">7</td>
+              <td><strong>The Snowy Day</strong></td>
+              <td>Ezra Jack Keats</td>
+              <td class="age">2–5</td>
+              <td>Builds observation, sensory language, and everyday wonder through a simple child-centered story.</td>
+              <td>A Caldecott-winning classic that celebrates a child’s snowy urban adventure with warmth and quiet beauty.</td>
+              <td><a href="https://www.amazon.com/s?k=The+Snowy+Day+Ezra+Jack+Keats" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=The+Snowy+Day+Ezra+Jack+Keats" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">8</td>
+              <td><strong>Llama Llama Red Pajama</strong></td>
+              <td>Anna Dewdney</td>
+              <td class="age">2–5</td>
+              <td>Supports emotional regulation and separation reassurance, especially around bedtime anxiety.</td>
+              <td>A modern favorite with catchy rhyme and a very recognizable small-child bedtime meltdown.</td>
+              <td><a href="https://www.amazon.com/s?k=Llama+Llama+Red+Pajama" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=Llama+Llama+Red+Pajama" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">9</td>
+              <td><strong>Guess How Much I Love You</strong></td>
+              <td>Sam McBratney</td>
+              <td class="age">1–4</td>
+              <td>Reinforces affection, bonding, and emotional language in a gentle, reassuring way.</td>
+              <td>A tender parent-child favorite built around trying to measure love in bigger and bigger ways.</td>
+              <td><a href="https://www.amazon.com/s?k=Guess+How+Much+I+Love+You" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=Guess+How+Much+I+Love+You" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">10</td>
+              <td><strong>The Gruffalo</strong></td>
+              <td>Julia Donaldson</td>
+              <td class="age">3–5</td>
+              <td>Improves listening comprehension, prediction, and confidence through a clever repeating story pattern.</td>
+              <td>A smart, funny forest tale in rhyme featuring a small mouse who outwits bigger creatures.</td>
+              <td><a href="https://www.amazon.com/s?k=The+Gruffalo+Julia+Donaldson" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=The+Gruffalo+Julia+Donaldson" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">11</td>
+              <td><strong>We’re Going on a Bear Hunt</strong></td>
+              <td>Michael Rosen</td>
+              <td class="age">2–5</td>
+              <td>Develops rhythm, movement, memory, and expressive read-aloud participation.</td>
+              <td>A chant-like adventure story that children love to act out with voices and gestures.</td>
+              <td><a href="https://www.amazon.com/s?k=We%27re+Going+on+a+Bear+Hunt" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=We%27re+Going+on+a+Bear+Hunt" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">12</td>
+              <td><strong>Press Here</strong></td>
+              <td>Hervé Tullet</td>
+              <td class="age">2–5</td>
+              <td>Encourages cause-and-effect thinking, attention, and playful participation with the page.</td>
+              <td>An interactive picture book that makes children feel like they are controlling the story.</td>
+              <td><a href="https://www.amazon.com/s?k=Press+Here+Herve+Tullet" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=Press+Here+Herve+Tullet" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">13</td>
+              <td><strong>Giraffes Can’t Dance</strong></td>
+              <td>Giles Andreae</td>
+              <td class="age">2–5</td>
+              <td>Promotes self-confidence, perseverance, and the idea that kids can succeed differently from others.</td>
+              <td>A feel-good rhyming story about finding your own style and joy.</td>
+              <td><a href="https://www.amazon.com/s?k=Giraffes+Can%27t+Dance" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=Giraffes+Can%27t+Dance" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">14</td>
+              <td><strong>The Going-To-Bed Book</strong></td>
+              <td>Sandra Boynton</td>
+              <td class="age">0–3</td>
+              <td>Supports bedtime structure, rhyme awareness, and anticipation through a playful nightly routine.</td>
+              <td>A Sandra Boynton staple featuring animals getting ready for bed on a boat for reasons toddlers do not need explained.</td>
+              <td><a href="https://www.amazon.com/s?k=The+Going-To-Bed+Book+Sandra+Boynton" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=The+Going-To-Bed+Book+Sandra+Boynton" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">15</td>
+              <td><strong>Moo, Baa, La La La!</strong></td>
+              <td>Sandra Boynton</td>
+              <td class="age">0–3</td>
+              <td>Builds sound recognition, animal vocabulary, and joy in language play.</td>
+              <td>A short, silly, highly repeatable board book that works especially well for very young listeners.</td>
+              <td><a href="https://www.amazon.com/s?k=Moo+Baa+La+La+La+Sandra+Boynton" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=Moo+Baa+La+La+La+Sandra+Boynton" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">16</td>
+              <td><strong>Don’t Let the Pigeon Drive the Bus!</strong></td>
+              <td>Mo Willems</td>
+              <td class="age">3–5</td>
+              <td>Encourages humor, expressive reading, and understanding of persuasion and self-control.</td>
+              <td>A breakout picture book that invites children to yell back at the character, which obviously they love.</td>
+              <td><a href="https://www.amazon.com/s?k=Don%27t+Let+the+Pigeon+Drive+the+Bus" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=Don%27t+Let+the+Pigeon+Drive+the+Bus" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">17</td>
+              <td><strong>Little Blue Truck</strong></td>
+              <td>Alice Schertle</td>
+              <td class="age">1–4</td>
+              <td>Teaches kindness, cooperation, and sound imitation in a rhythm-rich format.</td>
+              <td>A cozy favorite with animal sounds, friendly pacing, and a strong message about helping others.</td>
+              <td><a href="https://www.amazon.com/s?k=Little+Blue+Truck" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=Little+Blue+Truck" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">18</td>
+              <td><strong>Harold and the Purple Crayon</strong></td>
+              <td>Crockett Johnson</td>
+              <td class="age">3–5</td>
+              <td>Supports imagination, narrative thinking, and the idea that stories can be created from simple lines and choices.</td>
+              <td>A deceptively simple classic where one child draws his own world into existence.</td>
+              <td><a href="https://www.amazon.com/s?k=Harold+and+the+Purple+Crayon" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=Harold+and+the+Purple+Crayon" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">19</td>
+              <td><strong>Peek-a Who?</strong></td>
+              <td>Nina Laden</td>
+              <td class="age">0–2</td>
+              <td>Boosts anticipation, visual attention, and early social play with simple peek-through interaction.</td>
+              <td>A compact board book built for babies and young toddlers who love guessing games.</td>
+              <td><a href="https://www.amazon.com/s?k=Peek-a+Who+Nina+Laden" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=Peek-a+Who+Nina+Laden" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+            <tr>
+              <td class="rank">20</td>
+              <td><strong>Owl Babies</strong></td>
+              <td>Martin Waddell</td>
+              <td class="age">2–5</td>
+              <td>Helps children talk about separation, reassurance, and waiting for a caregiver to return.</td>
+              <td>A warm nighttime story about three baby owls missing their mother and feeling safe again.</td>
+              <td><a href="https://www.amazon.com/s?k=Owl+Babies+Martin+Waddell" target="_blank" rel="noopener noreferrer">Amazon</a></td>
+              <td><a href="https://www.walmart.com/search?q=Owl+Babies+Martin+Waddell" target="_blank" rel="noopener noreferrer">Walmart</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Quick Recommendations by Stage</h2>
+      <ul>
+        <li><strong>0–1 years:</strong> <em>Goodnight Moon</em>, <em>Brown Bear, Brown Bear, What Do You See?</em>, <em>Moo, Baa, La La La!</em>, <em>Peek-a Who?</em></li>
+        <li><strong>1–2 years:</strong> <em>The Very Hungry Caterpillar</em>, <em>Dear Zoo</em>, <em>Little Blue Truck</em>, <em>The Going-To-Bed Book</em></li>
+        <li><strong>2–3 years:</strong> <em>Guess How Much I Love You</em>, <em>We’re Going on a Bear Hunt</em>, <em>Llama Llama Red Pajama</em></li>
+        <li><strong>3–5 years:</strong> <em>The Gruffalo</em>, <em>Where the Wild Things Are</em>, <em>Harold and the Purple Crayon</em>, <em>Don’t Let the Pigeon Drive the Bus!</em></li>
+      </ul>
+      <div class="callout">
+        A balanced home shelf usually includes: one bedtime favorite, one rhyme book, one silly interactive book,
+        one feelings book, and one imaginative story. Nice and DRY. No need to buy 47 books about trucks unless your child is,
+        in fact, already a tiny foreman.
+      </div>
+    </section>
+
+    <div class="footer">
+      HTML report created for books commonly recommended for children ages 0–5, using popularity-based ordering and retail search links.
+    </div>
+  </div>
+</body>
+</html>
